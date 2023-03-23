@@ -38,23 +38,6 @@ userRouter.post("/login", async (req, res, next) => {
     const {email, password} = req.body;
     try{
         const user = await UserModel.find({email})
-         
-    //   if(user.length > 0){
-    //     const hashed_password = user[0].password;
-    //     bcrypt.compare(password, hashed_password, function(err, result) {
-    //         if(result){
-    //             const token = jwt.sign({"userID":user[0]._id}, process.env.KEY, {
-    //                 expiresIn: "1h"
-    //             });
-    //             res.send({"msg":"Login successfull","token" : token})
-    //         }
-    //         else{
-    //             res.send("Login failed please check password")
-    //         }
-    //   })} 
-    //   else{
-    //     res.send("Login failed user not valid")
-    //   }
 
     if(!user) {
         return res.status(401).json({ message: "Invalid email or password"});
@@ -66,7 +49,7 @@ userRouter.post("/login", async (req, res, next) => {
     }
 
     const token = jwt.sign({ userID:  user[0]._id}, process.env.KEY, {
-        expiresIn: "1m"
+        expiresIn: "1h"
     });
 
     // const refreshtoken = randtoken.uid(25)

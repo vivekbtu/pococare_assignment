@@ -22,6 +22,8 @@ app.get("/",(req,res)=>{
 })
 app.use("/user",userRouter)
 
+// Refresh Token
+
 app.post("/refresh", (req, res) => {
     const { email, refresh_token } = req.body;
     const isValid = verifyRefresh(email, refresh_token);
@@ -31,7 +33,7 @@ app.post("/refresh", (req, res) => {
     .json({ success: false, error: "Invalid token,try login again" });
     }
     const token = jwt.sign({ email: email }, process.env.KEY, {
-    expiresIn: "2m",
+    expiresIn: "10m",
     });
     return res.status(200).json({ success: true, token });
     });
