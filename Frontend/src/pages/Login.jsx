@@ -1,6 +1,6 @@
 
 
-import { Button, Container, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement} from '@chakra-ui/react'
+import { Button, Container, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -21,11 +21,12 @@ const Login = () => {
     const dispatch = useDispatch()
     const { auth } = useSelector((state) => state)
     console.log(auth)
+    const toast = useToast()
 
 
     const handleForm = async (e) => {
         e.preventDefault()
-        // console.log(formData)
+        console.log(formData)
         dispatch(LogIn(formData))
     }
 
@@ -38,9 +39,15 @@ const Login = () => {
     };
 
     if (auth.isAuth) {
-        alert("Login Success");
+        // toast({
+        //     description: "hurray ! logged in",
+        //     status: 'success',
+        //     duration: 2000,
+        //     isClosable: true,
+        // })
         navigate("/dashboard")
     }
+
 
     return (
         <div >

@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +14,7 @@ const SignUp = () => {
   const handleClick = () => setShow(!show);
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
+  const toast = useToast()
   const handleSubmit = async () => {
     const payload = {
       email,
@@ -25,14 +25,32 @@ const SignUp = () => {
       let res = await axios.post("https://poco-care-assignment.onrender.com/user/signup", payload)
       console.log(res)
       if (res.data === "User already exist") {
-        alert(res.data);
+        // alert(res.data);
+        toast({
+          description: res.data,
+          status: 'warning',
+          duration: 2000,
+          isClosable: true,
+        })
         return;
       }
-      alert(res.data);
+      // alert(res.data);
+      toast({
+        description: res.data,
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      })
       usenavigate("/login");
     }
     catch (err) {
-      alert("Wrong Data");
+      // alert("Wrong Data");
+      toast({
+        description: "Invalid Data",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
       console.log(err);
     }
 
